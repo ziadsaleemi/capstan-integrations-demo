@@ -6,7 +6,7 @@ One source-controlled demo used to prove four Capstan integration paths:
 | --- | --- | --- |
 | Event-Driven Ansible | `extensions/eda/rulebooks/capstan_demo.yml` | EDA project sync discovers the rulebook and an activation emits demo events. |
 | Galaxy NG | Collection metadata, role, module, and playbook | `ansible-galaxy collection build` publishes `r92.capstan_demo` and Galaxy exposes its real contents. |
-| Gatekeeper | `gatekeeper/policies/` | Capstan previews, dry-runs, and applies the template and constraint through its governed project-sync API. |
+| Gatekeeper | `opa/` and `gatekeeper/policies/` | Capstan first syncs the OPA approval guardrail, then previews, dry-runs, and applies the template and constraint through its governed project-sync API. |
 | Project Quay | `ee/execution-environment.yml` | A saved EE build template builds this project and pushes `admin/capstan-integrations-demo:latest`. |
 
 ## Local validation
@@ -40,7 +40,9 @@ Create an EDA project from this Git URL and synchronize it. EDA discovers rulebo
 
 ## Gatekeeper
 
-Sync `gatekeeper/policies` from the Capstan Project. The constraint is deliberately non-blocking (`enforcementAction: dryrun`) and only selects Kubernetes objects carrying:
+Sync `opa/**/*.rego` before syncing `gatekeeper/policies` from the Capstan Project. The OPA rule denies by default and only permits an `apply` initiated by a system administrator with `human_approved: true` through the project-sync endpoint.
+
+The constraint is deliberately non-blocking (`enforcementAction: dryrun`) and only selects Kubernetes objects carrying:
 
 ```yaml
 capstan.r92.io/demo: "true"

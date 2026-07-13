@@ -9,6 +9,12 @@ rm -rf dist
 mkdir -p dist
 ansible-galaxy collection build --force --output-path dist
 
+if command -v opa >/dev/null 2>&1; then
+  opa check --strict opa
+else
+  echo "opa not installed; Rego compilation skipped."
+fi
+
 if command -v gator >/dev/null 2>&1; then
   (
     cd gatekeeper/tests

@@ -28,5 +28,14 @@ jobs:
             "https://github.com/open-policy-agent/gatekeeper/releases/download/${GATOR_VERSION}/gator-${GATOR_VERSION}-linux-amd64.tar.gz" \
             | sudo tar --extract --gzip --file - --directory /usr/local/bin gator
 
+      - name: Install OPA
+        env:
+          OPA_VERSION: v1.4.2
+        run: |
+          sudo curl --fail --location --silent --show-error \
+            --output /usr/local/bin/opa \
+            "https://openpolicyagent.org/downloads/${OPA_VERSION}/opa_linux_amd64_static"
+          sudo chmod +x /usr/local/bin/opa
+
       - name: Validate all integration content
         run: ./scripts/validate.sh
