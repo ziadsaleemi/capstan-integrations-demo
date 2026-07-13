@@ -8,7 +8,6 @@ authors:
 description: End-to-end Capstan demo content for EDA, Galaxy NG, Gatekeeper, and Project Quay.
 license:
   - MIT
-license_file: LICENSE
 tags:
   - automation
   - capstan
