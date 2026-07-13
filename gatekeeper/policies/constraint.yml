@@ -1,0 +1,20 @@
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sCapstanRequiredLabels
+metadata:
+  name: capstan-demo-required-labels
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+      - apiGroups:
+          - ""
+        kinds:
+          - ConfigMap
+    labelSelector:
+      matchLabels:
+        capstan.r92.io/demo: "true"
+  parameters:
+    labels:
+      - owner
+      - purpose

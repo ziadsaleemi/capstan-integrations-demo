@@ -1,0 +1,16 @@
+---
+apiVersion: test.gatekeeper.sh/v1alpha1
+kind: Suite
+tests:
+  - name: Capstan required labels
+    template: ../policies/constraint-template.yml
+    constraint: ../policies/constraint.yml
+    cases:
+      - name: Labeled demo ConfigMap is allowed
+        object: fixtures/allowed-configmap.yml
+        assertions:
+          - violations: no
+      - name: Missing owner and purpose labels are reported
+        object: fixtures/rejected-configmap.yml
+        assertions:
+          - violations: 1

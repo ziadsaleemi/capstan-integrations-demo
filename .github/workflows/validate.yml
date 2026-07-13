@@ -1,0 +1,32 @@
+---
+name: Validate integration demo
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Ansible and YAML parser
+        run: python3 -m pip install ansible-core PyYAML
+
+      - name: Install Gatekeeper gator
+        env:
+          GATOR_VERSION: v3.20.1
+        run: |
+          curl --fail --location --silent --show-error \
+            "https://github.com/open-policy-agent/gatekeeper/releases/download/${GATOR_VERSION}/gator-${GATOR_VERSION}-linux-amd64.tar.gz" \
+            | sudo tar --extract --gzip --file - --directory /usr/local/bin gator
+
+      - name: Validate all integration content
+        run: ./scripts/validate.sh

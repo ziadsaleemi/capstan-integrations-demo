@@ -1,0 +1,34 @@
+---
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8scapstanrequiredlabels
+  annotations:
+    metadata.gatekeeper.sh/title: Capstan required labels
+    metadata.gatekeeper.sh/version: 1.0.0
+    description: Requires selected Capstan demo resources to carry configured labels.
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sCapstanRequiredLabels
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            labels:
+              type: array
+              items:
+                type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8scapstanrequiredlabels
+
+        violation[{"msg": msg, "details": {"missing_labels": missing}}] {
+          provided := {label | input.review.object.metadata.labels[label]}
+          required := {label | label := input.parameters.labels[_]}
+          missing := required - provided
+          count(missing) > 0
+          msg := sprintf("Capstan demo resource is missing required labels: %v", [missing])
+        }

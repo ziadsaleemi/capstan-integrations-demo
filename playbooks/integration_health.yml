@@ -1,0 +1,18 @@
+---
+- name: Validate the Capstan integration demo collection
+  hosts: localhost
+  gather_facts: false
+  roles:
+    - role: r92.capstan_demo.integration_report
+  tasks:
+    - name: Query collection module
+      r92.capstan_demo.integration_report:
+        message: Collection module executed successfully.
+      register: capstan_demo_module_result
+
+    - name: Require all demo integrations
+      ansible.builtin.assert:
+        that:
+          - capstan_demo_module_result.integrations | sort == ['eda', 'galaxy_ng', 'gatekeeper', 'quay'] | sort
+          - not capstan_demo_module_result.changed
+        success_msg: Capstan demo collection is ready.

@@ -1,0 +1,24 @@
+---
+- name: Capstan deterministic integration demo
+  hosts: all
+  sources:
+    - ansible.eda.range:
+        limit: 3
+  rules:
+    - name: Record the first demo event
+      condition: event.i == 0
+      action:
+        debug:
+          msg: Capstan EDA demo received its first event.
+
+    - name: Record the second demo event
+      condition: event.i == 1
+      action:
+        debug:
+          msg: Capstan EDA demo received its second event.
+
+    - name: Finish the deterministic smoke test
+      condition: event.i == 2
+      action:
+        shutdown:
+          message: Capstan EDA demo completed successfully.

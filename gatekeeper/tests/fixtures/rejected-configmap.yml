@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: capstan-demo-rejected
+  namespace: default
+  labels:
+    capstan.r92.io/demo: "true"
+data:
+  status: missing-required-labels

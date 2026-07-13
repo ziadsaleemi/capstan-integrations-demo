@@ -1,0 +1,16 @@
+---
+- name: Publish Capstan integration report
+  ansible.builtin.set_fact:
+    capstan_integration_report:
+      status: ready
+      message: "{{ capstan_demo_message }}"
+      host: "{{ inventory_hostname }}"
+      integrations:
+        - eda
+        - galaxy_ng
+        - gatekeeper
+        - quay
+
+- name: Show Capstan integration report
+  ansible.builtin.debug:
+    var: capstan_integration_report

@@ -1,0 +1,29 @@
+---
+namespace: r92
+name: capstan_demo
+version: 1.0.0
+readme: README.md
+authors:
+  - Ziad Saleemi
+description: End-to-end Capstan demo content for EDA, Galaxy NG, Gatekeeper, and Project Quay.
+license:
+  - MIT
+license_file: LICENSE
+tags:
+  - automation
+  - capstan
+  - demo
+  - eda
+  - policy
+dependencies: {}
+repository: https://github.com/ziadsaleemi/capstan-integrations-demo
+homepage: https://github.com/ziadsaleemi/capstan-integrations-demo
+issues: https://github.com/ziadsaleemi/capstan-integrations-demo/issues
+build_ignore:
+  - .gitignore
+  - .github
+  - dist
+  - ee
+  - gatekeeper
+  - scripts
+  - tests

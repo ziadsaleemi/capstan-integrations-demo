@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: capstan-demo-allowed
+  namespace: default
+  labels:
+    capstan.r92.io/demo: "true"
+    owner: platform-team
+    purpose: integration-smoke
+data:
+  status: ready

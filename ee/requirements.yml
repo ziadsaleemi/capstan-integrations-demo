@@ -1,0 +1,5 @@
+---
+collections:
+  - name: https://github.com/ziadsaleemi/capstan-integrations-demo.git
+    type: git
+    version: main
